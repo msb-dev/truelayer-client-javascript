@@ -8,14 +8,12 @@ import { ITransaction } from "../../src/v1/interfaces/data/ITransaction";
 
 import { ICard } from "../../src/v1/interfaces/data/ICard";
 import { ICardBalance } from "../../src/v1/interfaces/data/ICardBalance";
-import { ICardTransaction } from "../../src/v1/interfaces/data/ICardTransaction";
-import { IProviderInfo } from '../../src/v1/interfaces/auth/IProviderInfo';
+import { IProviderInfo } from "../../src/v1/interfaces/auth/IProviderInfo";
 import { IStatusInfo } from "../../src/v1/interfaces/status/IStatusInfo";
 import { IStandingOrder } from "../../src/v1/interfaces/data/IStandingOrder";
 import { IDirectDebit } from "../../src/v1/interfaces/data/IDirectDebit";
 
 export class Fixtures {
-
     // Expired access token
     public readonly accessToken: string =
         `eyJhbGciOiJSUzI1NiIsImtpZCI6IjE0NTk4OUIwNTdDOUMzMzg0MDc4MDBBOEJBNkNCOUZFQjMzRTk1MTAiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJGRm1Kc0ZmSnd6` +
@@ -32,27 +30,26 @@ export class Fixtures {
     public readonly requestOptions: object = {
         uri: `${Constants.API_URL}/data/v1/info`,
         headers: {
-            Authorization: "Bearer " + this.accessToken
+            Authorization: "Bearer " + this.accessToken,
         },
-        timeout: Constants.API_TIMEOUT
+        timeout: Constants.API_TIMEOUT,
     };
 
     // Expected object response string for buildRequestOptions() with required params
     public readonly requestOptionsQs: object = {
         uri: `${Constants.API_URL}/data/v1/info`,
         headers: {
-            Authorization: "Bearer " + this.accessToken
+            Authorization: "Bearer " + this.accessToken,
         },
         timeout: Constants.API_TIMEOUT,
         qs: {
             from: "2017-04-20",
-            to: "2017-04-30"
-        }
+            to: "2017-04-30",
+        },
     };
 
     // Expected /Me json response
-    public readonly authResponse: string =
-        `{
+    public readonly authResponse: string = `{
             "access_token": "test_access_token",
             "expires_in": 3600,
             "token_type": "Bearer",
@@ -60,524 +57,533 @@ export class Fixtures {
         }`;
 
     // Expected /Me json response
-    public readonly meResponse: IResult<IMe> =
-        {
-            results: [
-                {
-                    client_id: "test",
-                    credentials_id: "6L7RxyPKX0THy1tw93PB4V+ 8DB+KjnX9Pxa451yXPu0=",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                }
-            ]
-        };
+    public readonly meResponse: IResult<IMe> = {
+        results: [
+            {
+                client_id: "test",
+                credentials_id: "6L7RxyPKX0THy1tw93PB4V+ 8DB+KjnX9Pxa451yXPu0=",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+            },
+        ],
+    };
 
     // Expected /Info json response string
-    public readonly infoResponse: IResult<IInfo> =
-        {
-            results: [
-                {
-                    addresses: [
-                        {
-                            address: "1 Market Street",
-                            city: "San Francisco",
-                            country: "US",
-                            zip: "94103"
-                        }
-                    ],
-                    date_of_birth: "1984-07-03T00:00:00",
-                    emails: [
-                        "john@doe.com"
-                    ],
-                    full_name: "John Doe",
-                    phones: [
-                        "+14151234567"
-                    ],
-                    update_timestamp: "0001-01-01T00:00:00Z"
-                }
-            ]
-        };
+    public readonly infoResponse: IResult<IInfo> = {
+        results: [
+            {
+                addresses: [
+                    {
+                        address: "1 Market Street",
+                        city: "San Francisco",
+                        country: "US",
+                        zip: "94103",
+                    },
+                ],
+                date_of_birth: "1984-07-03T00:00:00",
+                emails: ["john@doe.com"],
+                full_name: "John Doe",
+                phones: ["+14151234567"],
+                update_timestamp: "0001-01-01T00:00:00Z",
+            },
+        ],
+    };
 
     // Expected /Accounts json response string
-    public readonly accountsResponse: IResult<IAccount> =
-        {
-            results: [
-                {
-                    update_timestamp: "2017-02-07T17: 29:24.740802Z",
-                    account_id: "f1234560abf9f57287637624def390871",
-                    account_type: "TRANSACTION",
-                    display_name: "Club Lloyds",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                    currency: "GBP",
-                    account_number: {
-                        iban: "GB35LOYD12345678901234",
-                        number: "12345678",
-                        sort_code: "12-34 - 56"
-                    }
-                },
-                {
-                    update_timestamp: "2017-02-07T17: 29:24.740802Z",
-                    account_id: "f1234560abf9f57287637624def390872",
-                    account_type: "SAVING",
-                    display_name: "Club Lloyds",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                    currency: "GBP",
-                    account_number: {
-                        iban: "GB35LOYD12345678901235",
-                        number: "12345679",
-                        sort_code: "12-34 - 57"
-                    }
-                }
-            ]
-        };
-
-    // Expected /Accounts/{id} json response
-    public readonly accountResponse: IResult<IAccount> =
-        {
-            results: [
-                {
-                    update_timestamp: "2017-02 - 07T17: 29:24.740802Z",
-                    account_id: "f1234560abf9f57287637624def390871",
-                    account_type: "TRANSACTION",
-                    display_name: "Club Lloyds",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                    currency: "GBP",
-                    account_number: {
-                        iban: "GB35LOYD12345678901234",
-                        number: "12345678",
-                        sort_code: "12-34 - 56"
-                    }
-                }
-            ]
-        };
-
-    // Expected /Accounts/{id}/Balance json response
-    public readonly accountBalanceResponse: IResult<IBalance> =
-        {
-            results: [
-                {
-                    currency: "GBP",
-                    available: 1161.2,
-                    current: 1161.2,
-                    update_timestamp: "2017-02 - 07T17: 33:30.001222Z"
-                }
-            ]
-        };
-
-    // Expected /Accounts/{id}/Transactions json response
-    public readonly accountTransactionsResponse: IResult<ITransaction> =
-        {
-            results: [
-                {
-                    timestamp: "2017-01-14T00:00:00",
-                    description: "PAYPAL EBAY",
-                    transaction_type: "DEBIT",
-                    transaction_category: "PURCHASE",
-                    amount: -10.0,
-                    currency: "GBP",
-                    transaction_id: "cd0a7d0ec46686b2bed54af7bbf17464",
-                    meta: {
-                        provider_transaction_category: "DEB"
-                    }
-                },
-                {
-                    timestamp: "2017-01-18T00:00:00",
-                    description: "PAYPAL BETFRED",
-                    transaction_type: "DEBIT",
-                    transaction_category: "PURCHASE",
-                    amount: -2.0,
-                    currency: "GBP",
-                    transaction_id: "848f99795dc9793aaa189980eccbf161",
-                    meta: {
-                        provider_transaction_category: "DEB"
-                    }
-                },
-                {
-                    timestamp: "2017-01-30T00:00:00",
-                    description: "MT SecureTrade Lim",
-                    transaction_type: "DEBIT",
-                    transaction_category: "PURCHASE",
-                    amount: -20.5,
-                    currency: "GBP",
-                    transaction_id: "ae19ae9a38dbc41c5ad952e3add7c2f5",
-                    meta: {
-                        provider_transaction_category: "DEB"
-                    }
-                },
-                {
-                    timestamp: "2017-02 - 01T00: 00:00+00:00",
-                    description: "INTEREST (GROSS)",
-                    transaction_id: "239a35851d9fc833f1ec748f6efc8097",
-                    transaction_type: "CREDIT",
-                    transaction_category: "INTEREST",
-                    amount: 0.77,
-                    currency: "GBP",
-                    meta: {}
-                },
-                {
-                    timestamp: "2017-02 - 01T00: 00:00+00:00",
-                    description: "O/D USAGE FEE",
-                    transaction_id: "16a5f86e9da92d86aed9ad02bbce2f47",
-                    transaction_type: "DEBIT",
-                    transaction_category: "FEE_CHARGE",
-                    amount: -6,
-                    currency: "GBP",
-                    meta: {
-                        provider_transaction_category: "CHG"
-                    }
-                },
-                {
-                    timestamp: "2017-01 - 30T00: 00:00+00:00",
-                    description: "INTEREST (GROSS)",
-                    transaction_id: "5b9bc882d3feefe3c5d081bd4cb96f7c",
-                    transaction_type: "CREDIT",
-                    transaction_category: "INTEREST",
-                    amount: 0.77,
-                    currency: "GBP",
-                    meta: {}
-                },
-                {
-                    timestamp: "2017-02 - 01T00: 00:00+00:00",
-                    description: "O/D USAGE FEE",
-                    transaction_id: "c1b3a5129487f96d03d22f66c2b57139",
-                    transaction_type: "DEBIT",
-                    transaction_category: "FEE_CHARGE",
-                    amount: -6,
-                    currency: "GBP",
-                    meta: {
-                        provider_transaction_category: "CHG"
-                    }
-                },
-                {
-                    timestamp: "2017-01 - 30T00: 00:00+00:00",
-                    description: "THAMES WATER",
-                    transaction_id: "4114e18ec809c5ca5cafbf38fcf5aa5f",
-                    transaction_type: "DEBIT",
-                    transaction_category: "DIRECT_DEBIT",
-                    amount: -33.93,
-                    currency: "GBP",
-                    meta: {
-                        provider_transaction_category: "DD"
-                    }
-                },
-                {
-                    timestamp: "2017-01 - 19T00: 00:00+00:00",
-                    description: "L B I COUNCIL TAX",
-                    transaction_id: "206c10209cd96477ccb39a9adf802b88",
-                    transaction_type: "DEBIT",
-                    transaction_category: "DIRECT_DEBIT",
-                    amount: -148,
-                    currency: "GBP",
-                    meta: {
-                        provider_transaction_category: "DD"
-                    }
-                },
-                {
-                    timestamp: "2017-01 - 16T00: 00:00+00:00",
-                    description: "TV LICENCE MBP",
-                    transaction_id: "dd567a32d4a1ca05b158ed3c2cebf077",
-                    transaction_type: "DEBIT",
-                    transaction_category: "DIRECT_DEBIT",
-                    amount: -24.25,
-                    currency: "GBP",
-                    meta: {
-                        provider_transaction_category: "DD"
-                    }
-                },
-                {
-                    timestamp: "2017-01 - 03T00: 00:00+00:00",
-                    description: "ACME LIMITED",
-                    transaction_id: "61601c817818c476495709cde9bc82df",
-                    transaction_type: "CREDIT",
-                    transaction_category: "TRANSFER",
-                    amount: 12345.67,
-                    currency: "GBP",
-                    meta: {
-                        provider_transaction_category: "FPI"
-                    }
-                }
-            ]
-        };
-
-    // Expected /Cards json response
-    public readonly cardsResponse: IResult<ICard> =
-        {
-            results: [
-                {
-                    account_id: "cfc2bcf7a405fed81ec8a777213baf59",
-                    card_network: "VISA",
-                    card_type: "CREDIT",
-                    currency: "GBP",
-                    display_name: "Platinum super",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                    partial_card_number: "6589",
-                    update_timestamp: "2017-10-12T06:47:22.4606763Z"
-                },
-                {
-                    account_id: "f76c93e41ca4b6e8de429087130663df",
-                    card_network: "MASTERCARD",
-                    card_type: "CREDIT",
-                    currency: "GBP",
-                    display_name: "Everyday",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                    partial_card_number: "1101",
-                    update_timestamp: "2017-10-12T06:47:22.4606768Z"
-                }
-            ]
-        };
-
-    // Expected /Cards/{id} json response
-    public readonly cardResponse: IResult<ICard> =
-        {
-            results: [
-                {
-                    account_id: "cfc2bcf7a405fed81ec8a777213baf59",
-                    card_network: "VISA",
-                    card_type: "CREDIT",
-                    currency: "GBP",
-                    display_name: "Platinum super",
-                    provider: {
-                        display_name: "Mock",
-                        provider_id: "mock",
-                        logo_uri: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg"
-                    },
-                    partial_card_number: "6589",
-                    update_timestamp: "2017-10-12T07:05:04.4471252Z"
-                }
-            ]
-        };
-
-    // Expected /Cards/{id}/Balance json response
-    public readonly cardBalanceResponse: IResult<ICardBalance> =
-        {
-            results: [
-                {
-                    currency: "GBP",
-                    available: 5479.0,
-                    current: 21.0,
-                    credit_limit: 5500.0,
-                    last_statement_date: "2017-10-02T00:00:00",
-                    last_statement_balance: 420.0,
-                    payment_due: 5.0,
-                    payment_due_date: "2017-11-01T00:00:00",
-                    update_timestamp: "2017-10-12T07:17:54.8144949Z"
-                }
-            ]
-        };
-
-    // Expected  /Accounts/{id}/StandingOrders json response
-    public readonly accountStandingOrderResponse: IResult<IStandingOrder> =
-        {
-            results: [
-                {
-                    currency: "GBP",
-                    frequency: "DD",
-                    next_payment_date: "2017-10-12T07:17:54.8144949Z",
-                    next_payment_amount: 123,
-                    first_payment_date: "2017-10-12T07:17:54.8144949Z",
-                    status: "Active",
-                    first_payment_amount: 123,
-                    final_payment_date: "2017-10-12T07:17:54.8144949Z",
-                    final_payment_amount: 123,
-                    timestamp: "2017-10-12T07:17:54.8144949Z",
-                    reference: "Savings",
-                    previous_payment_timestamp: "2017-10-12T07:17:54.8144949Z",
-                    previous_payment_amount: 123,
-                    meta: {
-                        provider_account_id: "234234-123"
-                    }
-                }
-            ]
-        };
-
-    // Expected  /Accounts/{id}/DirectDebits json response
-    public readonly accountDirectDebitResponse: IResult<IDirectDebit> =
-        {
-            results: [
-                {
-                    direct_debit_id: "123",
-                    name: "Netflic",
-                    status: "Active",
-                    previous_payment_timestamp: "2017-10-12T07:17:54.8144949Z",
-                    previous_payment_amount: 123,
-                    currency: "GBP",
-                    timestamp: "2017-10-12T07:17:54.8144949Z",
-                    meta: {
-                        provider_mandate_identification: "Lacsitos",
-                        provider_account_id: "234234-123"
-                    }
-                }
-            ]
-        };
-
-    // Expected /Cards/{id}/Transactions json response
-    public readonly cardTransactionsResponse: IResult<ICardTransaction> =
-        {
-            results: [
-                {
-                    timestamp: "2017-10-06T00:00:00",
-                    description: "ATM",
-                    transaction_id: "a4bb6ccd8ea5b0d0e2ff9c1dd473c675",
-                    amount: -85.0,
-                    currency: "GBP",
-                    transaction_category: "ATM",
-                    meta: {
-                        type: "Cash Point"
-                    }
-                },
-                {
-                    timestamp: "2017-10-06T00:00:00",
-                    description: "ATM",
-                    transaction_id: "33aedca69d496d1e9c12934da2c33149",
-                    amount: -85.0,
-                    currency: "GBP",
-                    transaction_category: "ATM",
-                    meta: {
-                        type: "Cash Point"
-                    }
-                },
-                {
-                    timestamp: "2017-10-09T00:00:00",
-                    description: "Rent",
-                    transaction_id: "a8912726fb215e5dd67a2e5ccc6359fe",
-                    amount: -700.0,
-                    currency: "GBP",
-                    transaction_category: "STANDING_ORDER",
-                    meta: {
-                        type: "Standing Order"
-                    }
-                },
-                {
-                    timestamp: "2017-10-09T00:00:00",
-                    description: "Energy",
-                    transaction_id: "b12d220e1eee58a88bc66b32c55c0326",
-                    amount: -24.99,
-                    currency: "GBP",
-                    transaction_category: "STANDING_ORDER",
-                    meta: {
-                        type: "Standing Order"
-                    }
-                }
-            ]
-        };
-
-    // Expected auth /api/providers response
-    public readonly providersResponse: IProviderInfo[] =
-        [
+    public readonly accountsResponse: IResult<IAccount> = {
+        results: [
             {
-                provider_id: "test_provider",
-                display_name: "Test Provider",
-                logo_url: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
-                scopes: ["accounts", "balance"],
+                update_timestamp: "2017-02-07T17: 29:24.740802Z",
+                account_id: "f1234560abf9f57287637624def390871",
+                account_type: "TRANSACTION",
+                display_name: "Club Lloyds",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+                currency: "GBP",
+                account_number: {
+                    iban: "GB35LOYD12345678901234",
+                    number: "12345678",
+                    sort_code: "12-34 - 56",
+                },
             },
             {
-                provider_id: "test_provider2",
-                display_name: "Test Provider Two",
-                logo_url: "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
-                scopes: ["offline_access", "transactions"],
-            }
-        ];
+                update_timestamp: "2017-02-07T17: 29:24.740802Z",
+                account_id: "f1234560abf9f57287637624def390872",
+                account_type: "SAVING",
+                display_name: "Club Lloyds",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+                currency: "GBP",
+                account_number: {
+                    iban: "GB35LOYD12345678901235",
+                    number: "12345679",
+                    sort_code: "12-34 - 57",
+                },
+            },
+        ],
+    };
+
+    // Expected /Accounts/{id} json response
+    public readonly accountResponse: IResult<IAccount> = {
+        results: [
+            {
+                update_timestamp: "2017-02 - 07T17: 29:24.740802Z",
+                account_id: "f1234560abf9f57287637624def390871",
+                account_type: "TRANSACTION",
+                display_name: "Club Lloyds",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+                currency: "GBP",
+                account_number: {
+                    iban: "GB35LOYD12345678901234",
+                    number: "12345678",
+                    sort_code: "12-34 - 56",
+                },
+            },
+        ],
+    };
+
+    // Expected /Accounts/{id}/Balance json response
+    public readonly accountBalanceResponse: IResult<IBalance> = {
+        results: [
+            {
+                currency: "GBP",
+                available: 1161.2,
+                current: 1161.2,
+                update_timestamp: "2017-02 - 07T17: 33:30.001222Z",
+            },
+        ],
+    };
+
+    // Expected /Accounts/{id}/Transactions json response
+    public readonly accountTransactionsResponse: IResult<ITransaction> = {
+        results: [
+            {
+                timestamp: "2017-01-14T00:00:00",
+                description: "PAYPAL EBAY",
+                transaction_type: "DEBIT",
+                transaction_category: "PURCHASE",
+                amount: -10.0,
+                currency: "GBP",
+                transaction_id: "cd0a7d0ec46686b2bed54af7bbf17464",
+                meta: {
+                    provider_transaction_category: "DEB",
+                },
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-01-18T00:00:00",
+                description: "PAYPAL BETFRED",
+                transaction_type: "DEBIT",
+                transaction_category: "PURCHASE",
+                amount: -2.0,
+                currency: "GBP",
+                transaction_id: "848f99795dc9793aaa189980eccbf161",
+                meta: {
+                    provider_transaction_category: "DEB",
+                },
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-01-30T00:00:00",
+                description: "MT SecureTrade Lim",
+                transaction_type: "DEBIT",
+                transaction_category: "PURCHASE",
+                amount: -20.5,
+                currency: "GBP",
+                transaction_id: "ae19ae9a38dbc41c5ad952e3add7c2f5",
+                meta: {
+                    provider_transaction_category: "DEB",
+                },
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-02 - 01T00: 00:00+00:00",
+                description: "INTEREST (GROSS)",
+                transaction_id: "239a35851d9fc833f1ec748f6efc8097",
+                transaction_type: "CREDIT",
+                transaction_category: "INTEREST",
+                amount: 0.77,
+                currency: "GBP",
+                meta: {},
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-02 - 01T00: 00:00+00:00",
+                description: "O/D USAGE FEE",
+                transaction_id: "16a5f86e9da92d86aed9ad02bbce2f47",
+                transaction_type: "DEBIT",
+                transaction_category: "FEE_CHARGE",
+                amount: -6,
+                currency: "GBP",
+                meta: {
+                    provider_transaction_category: "CHG",
+                },
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-01 - 30T00: 00:00+00:00",
+                description: "INTEREST (GROSS)",
+                transaction_id: "5b9bc882d3feefe3c5d081bd4cb96f7c",
+                transaction_type: "CREDIT",
+                transaction_category: "INTEREST",
+                amount: 0.77,
+                currency: "GBP",
+                meta: {},
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-02 - 01T00: 00:00+00:00",
+                description: "O/D USAGE FEE",
+                transaction_id: "c1b3a5129487f96d03d22f66c2b57139",
+                transaction_type: "DEBIT",
+                transaction_category: "FEE_CHARGE",
+                amount: -6,
+                currency: "GBP",
+                meta: {
+                    provider_transaction_category: "CHG",
+                },
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-01 - 30T00: 00:00+00:00",
+                description: "THAMES WATER",
+                transaction_id: "4114e18ec809c5ca5cafbf38fcf5aa5f",
+                transaction_type: "DEBIT",
+                transaction_category: "DIRECT_DEBIT",
+                amount: -33.93,
+                currency: "GBP",
+                meta: {
+                    provider_transaction_category: "DD",
+                },
+                transaction_classification: ["Bills and Utilities", "Utilities"]
+            },
+            {
+                timestamp: "2017-01 - 19T00: 00:00+00:00",
+                description: "L B I COUNCIL TAX",
+                transaction_id: "206c10209cd96477ccb39a9adf802b88",
+                transaction_type: "DEBIT",
+                transaction_category: "DIRECT_DEBIT",
+                amount: -148,
+                currency: "GBP",
+                meta: {
+                    provider_transaction_category: "DD",
+                },
+                transaction_classification: ["Taxes", "Local Tax"]
+            },
+            {
+                timestamp: "2017-01 - 16T00: 00:00+00:00",
+                description: "TV LICENCE MBP",
+                transaction_id: "dd567a32d4a1ca05b158ed3c2cebf077",
+                transaction_type: "DEBIT",
+                transaction_category: "DIRECT_DEBIT",
+                amount: -24.25,
+                currency: "GBP",
+                meta: {
+                    provider_transaction_category: "DD",
+                },
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-01 - 03T00: 00:00+00:00",
+                description: "ACME LIMITED",
+                transaction_id: "61601c817818c476495709cde9bc82df",
+                transaction_type: "CREDIT",
+                transaction_category: "TRANSFER",
+                amount: 12345.67,
+                currency: "GBP",
+                meta: {
+                    provider_transaction_category: "FPI",
+                },
+                transaction_classification: []
+            },
+        ],
+    };
+
+    // Expected /Cards json response
+    public readonly cardsResponse: IResult<ICard> = {
+        results: [
+            {
+                account_id: "cfc2bcf7a405fed81ec8a777213baf59",
+                card_network: "VISA",
+                card_type: "CREDIT",
+                currency: "GBP",
+                display_name: "Platinum super",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+                partial_card_number: "6589",
+                update_timestamp: "2017-10-12T06:47:22.4606763Z",
+            },
+            {
+                account_id: "f76c93e41ca4b6e8de429087130663df",
+                card_network: "MASTERCARD",
+                card_type: "CREDIT",
+                currency: "GBP",
+                display_name: "Everyday",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+                partial_card_number: "1101",
+                update_timestamp: "2017-10-12T06:47:22.4606768Z",
+            },
+        ],
+    };
+
+    // Expected /Cards/{id} json response
+    public readonly cardResponse: IResult<ICard> = {
+        results: [
+            {
+                account_id: "cfc2bcf7a405fed81ec8a777213baf59",
+                card_network: "VISA",
+                card_type: "CREDIT",
+                currency: "GBP",
+                display_name: "Platinum super",
+                provider: {
+                    display_name: "Mock",
+                    provider_id: "mock",
+                    logo_uri:
+                        "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+                },
+                partial_card_number: "6589",
+                update_timestamp: "2017-10-12T07:05:04.4471252Z",
+            },
+        ],
+    };
+
+    // Expected /Cards/{id}/Balance json response
+    public readonly cardBalanceResponse: IResult<ICardBalance> = {
+        results: [
+            {
+                currency: "GBP",
+                available: 5479.0,
+                current: 21.0,
+                credit_limit: 5500.0,
+                last_statement_date: "2017-10-02T00:00:00",
+                last_statement_balance: 420.0,
+                payment_due: 5.0,
+                payment_due_date: "2017-11-01T00:00:00",
+                update_timestamp: "2017-10-12T07:17:54.8144949Z",
+            },
+        ],
+    };
+
+    // Expected  /Accounts/{id}/StandingOrders json response
+    public readonly accountStandingOrderResponse: IResult<IStandingOrder> = {
+        results: [
+            {
+                currency: "GBP",
+                frequency: "DD",
+                next_payment_date: "2017-10-12T07:17:54.8144949Z",
+                next_payment_amount: 123,
+                first_payment_date: "2017-10-12T07:17:54.8144949Z",
+                status: "Active",
+                first_payment_amount: 123,
+                final_payment_date: "2017-10-12T07:17:54.8144949Z",
+                final_payment_amount: 123,
+                timestamp: "2017-10-12T07:17:54.8144949Z",
+                reference: "Savings",
+                previous_payment_timestamp: "2017-10-12T07:17:54.8144949Z",
+                previous_payment_amount: 123,
+                meta: {
+                    provider_account_id: "234234-123",
+                },
+            },
+        ],
+    };
+
+    // Expected  /Accounts/{id}/DirectDebits json response
+    public readonly accountDirectDebitResponse: IResult<IDirectDebit> = {
+        results: [
+            {
+                direct_debit_id: "123",
+                name: "Netflic",
+                status: "Active",
+                previous_payment_timestamp: "2017-10-12T07:17:54.8144949Z",
+                previous_payment_amount: 123,
+                currency: "GBP",
+                timestamp: "2017-10-12T07:17:54.8144949Z",
+                meta: {
+                    provider_mandate_identification: "Lacsitos",
+                    provider_account_id: "234234-123",
+                },
+            },
+        ],
+    };
+
+    // Expected /Cards/{id}/Transactions json response
+    public readonly cardTransactionsResponse: IResult<ITransaction> = {
+        results: [
+            {
+                timestamp: "2017-10-06T00:00:00",
+                description: "ATM",
+                transaction_id: "a4bb6ccd8ea5b0d0e2ff9c1dd473c675",
+                amount: -85.0,
+                currency: "GBP",
+                transaction_category: "ATM",
+                meta: {
+                    type: "Cash Point",
+                },
+                transaction_classification: [],
+                transaction_type: "DEBIT"
+            },
+            {
+                timestamp: "2017-10-06T00:00:00",
+                description: "ATM",
+                transaction_id: "33aedca69d496d1e9c12934da2c33149",
+                amount: -85.0,
+                currency: "GBP",
+                transaction_category: "ATM",
+                meta: {
+                    type: "Cash Point",
+                },
+                transaction_type: "DEBIT",
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-10-09T00:00:00",
+                description: "Rent",
+                transaction_id: "a8912726fb215e5dd67a2e5ccc6359fe",
+                amount: -700.0,
+                currency: "GBP",
+                transaction_category: "STANDING_ORDER",
+                meta: {
+                    type: "Standing Order",
+                },
+                transaction_type: "DEBIT",
+                transaction_classification: []
+            },
+            {
+                timestamp: "2017-10-09T00:00:00",
+                description: "Energy",
+                transaction_id: "b12d220e1eee58a88bc66b32c55c0326",
+                amount: -24.99,
+                currency: "GBP",
+                transaction_category: "STANDING_ORDER",
+                meta: {
+                    type: "Standing Order",
+                },
+                transaction_type: "DEBIT",
+                transaction_classification: ["Bills and Utilities", "Utilities"]
+            },
+        ],
+    };
+
+    // Expected auth /api/providers response
+    public readonly providersResponse: IProviderInfo[] = [
+        {
+            provider_id: "test_provider",
+            display_name: "Test Provider",
+            logo_url:
+                "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+            scopes: ["accounts", "balance"],
+        },
+        {
+            provider_id: "test_provider2",
+            display_name: "Test Provider Two",
+            logo_url:
+                "https://auth.truelayer.com/img/banks/banks-icons/mock-icon.svg",
+            scopes: ["offline_access", "transactions"],
+        },
+    ];
 
     // Expected auth /data/status response
-    public readonly statusResponse: IResult<IStatusInfo> =
-        {
-            "results": [
-                {
-                    "timestamp": "2019-01-07 10:00:00.000",
-                    "providers": [
-                        {
-                            "provider_id": "oauth-monzo",
-                            "endpoints": [
-                                {
-                                    "endpoint": "accounts",
-                                    "availability": 97.24,
-                                    "provider_error": 0,
-                                    "truelayer_error": 2.76
-                                },
-                                {
-                                    "endpoint": "accounts/balance",
-                                    "availability": 100,
-                                    "provider_error": 0,
-                                    "truelayer_error": 0
-                                }
-                            ]
-                        },
-                        {
-                            "provider_id": "oauth-starling",
-                            "endpoints": [
-                                {
-                                    "endpoint": "accounts",
-                                    "availability": 100,
-                                    "provider_error": 0,
-                                    "truelayer_error": 0
-                                },
-                                {
-                                    "endpoint": "accounts/balance",
-                                    "availability": 100,
-                                    "provider_error": 0,
-                                    "truelayer_error": 0
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2019-01-07 11:00:00.000",
-                    "providers": [
-                        {
-                            "provider_id": "oauth-monzo",
-                            "endpoints": [
-                                {
-                                    "endpoint": "accounts",
-                                    "availability": 100,
-                                    "provider_error": 0,
-                                    "truelayer_error": 0
-                                },
-                                {
-                                    "endpoint": "accounts/balance",
-                                    "availability": 92.86,
-                                    "provider_error": 7.14,
-                                    "truelayer_error": 0
-                                }
-                            ]
-                        },
-                        {
-                            "provider_id": "oauth-starling",
-                            "endpoints": [
-                                {
-                                    "endpoint": "accounts",
-                                    "availability": 96.43,
-                                    "provider_error": 0,
-                                    "truelayer_error": 3.57
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-
+    public readonly statusResponse: IResult<IStatusInfo> = {
+        results: [
+            {
+                timestamp: "2019-01-07 10:00:00.000",
+                providers: [
+                    {
+                        provider_id: "oauth-monzo",
+                        endpoints: [
+                            {
+                                endpoint: "accounts",
+                                availability: 97.24,
+                                provider_error: 0,
+                                truelayer_error: 2.76,
+                            },
+                            {
+                                endpoint: "accounts/balance",
+                                availability: 100,
+                                provider_error: 0,
+                                truelayer_error: 0,
+                            },
+                        ],
+                    },
+                    {
+                        provider_id: "oauth-starling",
+                        endpoints: [
+                            {
+                                endpoint: "accounts",
+                                availability: 100,
+                                provider_error: 0,
+                                truelayer_error: 0,
+                            },
+                            {
+                                endpoint: "accounts/balance",
+                                availability: 100,
+                                provider_error: 0,
+                                truelayer_error: 0,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                timestamp: "2019-01-07 11:00:00.000",
+                providers: [
+                    {
+                        provider_id: "oauth-monzo",
+                        endpoints: [
+                            {
+                                endpoint: "accounts",
+                                availability: 100,
+                                provider_error: 0,
+                                truelayer_error: 0,
+                            },
+                            {
+                                endpoint: "accounts/balance",
+                                availability: 92.86,
+                                provider_error: 7.14,
+                                truelayer_error: 0,
+                            },
+                        ],
+                    },
+                    {
+                        provider_id: "oauth-starling",
+                        endpoints: [
+                            {
+                                endpoint: "accounts",
+                                availability: 96.43,
+                                provider_error: 0,
+                                truelayer_error: 3.57,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    };
 }

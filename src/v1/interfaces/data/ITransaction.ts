@@ -1,3 +1,10 @@
+export interface IRunningBalance {
+    /** Amount of the transaction */
+    amount?: number;
+    /** ISO 4217 alpha-3 currency code */
+    currency?: string;
+}
+
 /**
  * Transaction information for a single transaction - for use with /accounts/v1/{account_id}/transactions endpoint
  * Docs: http://docs.truelayer.com/#retrieve-account-transactions
@@ -21,4 +28,10 @@ export interface ITransaction {
     transaction_type: string;
     /** Category of the transaction */
     transaction_category: string;
+    /** Classification of the transaction as described by https://docs.truelayer.com/#transaction-classification  */
+    transaction_classification: [string, string] | [];
+    /** Name of the merchant, if merchant can be identified */
+    merchant_name?: string;
+    /** OPTIONAL. If available, contains the running balance amount and currency*/
+    running_balance?: IRunningBalance;
 }

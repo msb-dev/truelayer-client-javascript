@@ -17,7 +17,6 @@ import * as request from "request-promise";
 
 import { ICard } from "./interfaces/data/ICard";
 import { ICardBalance } from "./interfaces/data/ICardBalance";
-import { ICardTransaction } from "./interfaces/data/ICardTransaction";
 
 /**
  * Class responsible for calling to the Data endpoints
@@ -211,16 +210,16 @@ export class DataAPIClient {
      * @param accountId
      * @param from
      * @param to
-     * @returns {Promise<IResult<ICardTransaction>>}
+     * @returns {Promise<IResult<ITransaction>>}
      */
-    public static async getCardTransactions(accessToken: string, accountId: string, from?: string, to?: string): Promise<IResult<ICardTransaction>> {
+    public static async getCardTransactions(accessToken: string, accountId: string, from?: string, to?: string): Promise<IResult<ITransaction>> {
 
         const qs: object = {
             ...from ? { from: from } : {},
             ...to ? { to: to } : {}
         };
 
-        return await DataAPIClient.callAPI<ICardTransaction>(accessToken, `${Constants.API_URL}/data/v1/cards/${accountId}/transactions`, qs);
+        return await DataAPIClient.callAPI<ITransaction>(accessToken, `${Constants.API_URL}/data/v1/cards/${accountId}/transactions`, qs);
     }
 
     /**
@@ -230,8 +229,8 @@ export class DataAPIClient {
      * @param accountId
      * @returns {Promise<IResult<ICardTransaction>>}
      */
-    public static async getCardPendingTransactions(accessToken: string, accountId: string): Promise<IResult<ICardTransaction>> {
-        return await DataAPIClient.callAPI<ICardTransaction>(accessToken, `${Constants.API_URL}/data/v1/cards/${accountId}/transactions/pending`);
+    public static async getCardPendingTransactions(accessToken: string, accountId: string): Promise<IResult<ITransaction>> {
+        return await DataAPIClient.callAPI<ITransaction>(accessToken, `${Constants.API_URL}/data/v1/cards/${accountId}/transactions/pending`);
     }
 
     /**
